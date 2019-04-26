@@ -1,0 +1,30 @@
+body {
+    background-image: url(images/diagmonds.png);
+}
+label {
+    color: rgb(237,211,130);
+    font-family: 'Righteous', cursive;
+    letter-spacing: 2px;
+}
+#title {
+    color: rgb(237,211,130);
+    font-family: 'Righteous', cursive;
+}
+#copyright {
+    color: hsl(210,25,98);
+    text-align: center;
+}
+#img {
+    width: 13rem;
+    float: right;
+}
+/* 
+h1 {
+    font-weight: bold;
+    color: white;
+}
+
+h4 {
+    color: white;
+} */
+

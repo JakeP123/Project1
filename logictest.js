@@ -1,63 +1,137 @@
-//URL pull for user data "change car oil https://www.googleapis.com/youtube/v3/videos?part=snippet&videoCategoryId=change+car+oil&key={YOUR_API_KEY}
-//Example with API //URL pull for user data "change car oil https://www.googleapis.com/youtube/v3/videos?part=snippet&videoCategoryId=change+car+oil&key=AIzaSyB1iL9inW_ZS71ILZyjrpM2w9vSbX0fL2s
-// URL template https://www.googleapis.com/youtube/v3/videos?part=snippet&videoCategoryId=[USER INPUT]={YOUR_API_KEY}
-
-//API KEY AIzaSyB1iL9inW_ZS71ILZyjrpM2w9vSbX0fL2s
-
-// sample ajax call GET https://www.youtube.com/search?part=snippet&topicId=/m/05z1_&type=video&key=AIzaSyB1iL9inW_ZS71ILZyjrpM2w9vSbX0fL2s
-
-
-
-            //Will need to call video ID and paste into this URL         https://www.youtube.com/results?search_query=+"videoId"
-
-
-
-
-
+alert("TEST");
 // SETUP VARIABLES
 //==========================================================
 
-var apiKey =  "AIzaSyB1iL9inW_ZS71ILZyjrpM2w9vSbX0fL2s";
-// var numVideos= 6;
+var apiKey = "AIzaSyB1iL9inW_ZS71ILZyjrpM2w9vSbX0fL2s";
 var queryTerm = "";
-var queryURLBase = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=plumbing&key=AIzaSyB1iL9inW_ZS71ILZyjrpM2w9vSbX0fL2s";
-var Finalsearch = "https://www.youtube.com/results?search_query=";
+var queryURLBase = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + apiKey;
+var Finalsearch = "https://www.youtube.com/embed/";
 var YouTubeSearch = "tutorial";
-var i = 0;
+
+
 // FUNCTIONS
 //==========================================================
 
-for (i=0; i < 6; i++) {
-function runQuery(numVideos, queryURL) {
+$(document).ready(function() {
+
+
+
+function runQuery(queryURL) {
     // AJAX Function
-    $.ajax({url: queryURLBase, method: "GET"})
-    .done(function(YoutubeData) {
-        console.log(YoutubeData);
-        var video = YoutubeData.items[0].id.videoId
+    $.ajax({ url: queryURL, method: "GET" })
+        .done(function (YoutubeData) {
 
-    // checking info
-        console.log(video)
-        console.log(Finalsearch+video)
-        console.log(queryURL)
-        $('#video-title').text(YoutubeData.items[0].snippet.title)
-        $('#video-url').html(queryURL)
+            for (var i = 0; i < 5; i++) {
+                // console.log("====================================================");
+                // console.log("VIDEO ID");
+                // console.log(YoutubeData.items[i].id.videoId);
+                // console.log("====================================================");
+                // console.log("TITLE");
+                // console.log(YoutubeData.items[i].snippet.title);
+                // console.log("====================================================");
+                // console.log("DESCRIPTION");
+                // console.log(YoutubeData.items[i].snippet.description);
+                // console.log("====================================================");
+                // console.log("WORKING URL");
+                // console.log(Finalsearch + YoutubeData.items[i].id.videoId);
+                // console.log("====================================================");
 
+                //Start Dumping to HTML Here
+                var wellSection = $('<div>');
+                wellSection.addClass("well");
+                wellSection.attr('id', 'videoWell-' + i);
+                $('#wellSection').append(wellSection);
+
+                //Attach the content to the appropriate well
+                $("#videoWell-" + i).append("<iframe src="+Finalsearch+YoutubeData.items[i].id.videoId+">" + "</iframe>");
+                $("#videoWell-" + i).append("<h1>"+ YoutubeData.items[i].snippet.title +"</h1>");
+                $("#videoWell-" + i).append("<h2>"+ YoutubeData.items[i].snippet.description +"</h2>");
+            }
+
+        })
+
+    }
+
+    //         function runQuery(queryURL) {
+    //             // AJAX Function
+    //             $.ajax({ url: queryURL, method: "GET" })
+    //                 .done(function (YoutubeData) {
+                        
+    //                     for (var i = 1; i < 5; i++) {
+    //                         // console.log("====================================================");
+    //                         // console.log("VIDEO ID");
+    //                         // console.log(YoutubeData.items[i].id.videoId);
+    //                         // console.log("====================================================");
+    //                         // console.log("TITLE");
+    //                         // console.log(YoutubeData.items[i].snippet.title);
+    //                         // console.log("====================================================");
+    //                         // console.log("DESCRIPTION");
+    //                         // console.log(YoutubeData.items[i].snippet.description);
+    //                         // console.log("====================================================");
+    //                         // console.log("WORKING URL");
+    //                         // console.log(Finalsearch + YoutubeData.items[i].id.videoId);
+    //                         // console.log("====================================================");
+            
+    //                         // Start Dumping to HTML Here
+    //                         var firstVid = $('<div>');
+    //                         firstVid.addClass("carousel-item active");
+    //                         firstVid.attr('data-interval', '10000')
+    //                         firstVid.attr('id', 'firstSlider')
+    //                         var carouselVid = $('<div>');
+    //                         carouselVid.addClass("carousel-item");
+    //                         carouselVid.attr('data-interval', '2000');
+    //                         carouselVid.attr('id', 'carouselSlider' + i);
+                    
+                            
+    //                         $('#wellSection').append('.carousel slide')
+    //                         $('.carousel-inner').prepend(carouselVid);
+    //                         $('.carousel-inner').append(firstVid);
+
+    //                         // Attach the content to the appropriate well
+    //                         // $(".carousel-inner").append($("#carouselSlider"));
+    //                         $("#carouselSlider" + i).append("<iframe src="+Finalsearch+YoutubeData.items[i].id.videoId+">" + "</iframe>");
+    //                         $("#carouselSlider" + i).append("<h1>"+ YoutubeData.items[i].snippet.title +"</h1>");
+    //                         $("#carouselSlider" + i).append("<h4>"+ YoutubeData.items[i].snippet.description +"</h4>");
+
+    //                     }
+                 
+
+    //                         //First Video in Carousel with "active" asset
+    //                         $("#firstSlider").append("<iframe src="+Finalsearch+YoutubeData.items[0].id.videoId+">" + "</iframe>");
+    //                         $("#firstSlider").append("<h1>"+ YoutubeData.items[0].snippet.title +"</h1>");
+    //                         $("#firstSlider").append("<h4>"+ YoutubeData.items[0].snippet.description +"</h4>");
+                       
+
+    //     })
+
+    // }
+
+
+    // MAIN PROCESSES
+    //==========================================================
+
+    $('#searchBtn').on('click', function (event) {
+        $('.panel-body').empty();
+        event.preventDefault();
+      
+
+        // Get search term
+        var queryTerm = $('#search-input').val().trim();
+        console.log(queryTerm);
+
+        // Add in the Search Term
+        var newURL = queryURLBase + "&q=" + encodeURIComponent(queryTerm) + "+" + YouTubeSearch;
+        console.log(newURL);
+
+        //Send the AJAX call the newly assembled URL
+
+        runQuery(newURL);
+
+        return false;
+        
+       
     })
 
-
-}
-}
-// MAIN PROCESSES
-//==========================================================
-
-$('#searchBtn').on('click', function(event) {
-    event.preventDefault();
-
-    var queryTerm = $('#search').val().trim();
-    console.log(queryTerm)
-    runQuery(3, Finalsearch+queryTerm);
-    console.log("lookingforthisclick")
-    return false;
 })
 
 // 1. Retrieve user inputs and convert to variables
@@ -65,4 +139,3 @@ $('#searchBtn').on('click', function(event) {
 // 3. Break down the YouTube API useable fields
 // 4. Dynamically generate html content
 // 5. Dealing with "edge cases" -- buds or situations that are not intuitive
-
