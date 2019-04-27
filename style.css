@@ -18,4 +18,16 @@ label {
     width: 13rem;
     float: right;
 }
+h3 {
+    text-align: center;
+    margin: 0 auto;
+    display:block;
+    font-weight: bold;
+ }
+ iframe {
+   width:500px;
+   height:250px;
+   display:block;
+   margin: 0 auto;
+ }
 
