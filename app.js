@@ -32,8 +32,8 @@ $(document).ready(function () {
                         wellSection.attr("id", "articleWell-" + i);
                         $("#reddit-holder").append(wellSection);
 
-                        $("#articleWell-" + i).append("<h5>" + response.data.children[i].data.title + "</h5");
-                        $("#articleWell-" + i).append("<a href= " + link + " >" + link + "</a>");
+                        $("#articleWell-" + i).append("<h3>" + response.data.children[i].data.title + "</h3>");
+                        $("#articleWell-" + i).append("<a href= " + link + " >" + "Link! Click me!" + "</a>");
 
                     }
 
@@ -57,14 +57,18 @@ $(document).ready(function () {
     // search button 
     $("#searchBtn").on('click', function (event) {
         event.preventDefault();
+        //modal pops up in 4 secs
+        setTimeout(modalPopUp, 4000);
         var searchTerm = $("#search").val().trim();
         // console.log(searchTerm);
         // var newUrl = "https://oauth.reddit.com/r/subreddit/search?q=" + searchTerm;
         // console.log(newUrl);
         reddit(searchTerm);
     })
-
-
+ //functon to call modal 
+function modalPopUp(){
+    $("#myModal").modal();
+}
 
 
 
