@@ -31,3 +31,18 @@ h3 {
    margin: 0 auto;
  }
 
+ .title-1{
+    font-family: 'Germania One', cursive;
+    font-family: 'Josefin Sans', sans-serif;
+ }
+  #zipCodeInput {
+     width: 27rem;
+  }
+
+  .delete-button {
+    color: green;
+    background: black;
+    margin: 0.6rem;
+  }
+ 
+
