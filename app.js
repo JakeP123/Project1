@@ -35,7 +35,12 @@ $(document).ready(function () {
                     //Attach the content to the appropriate well
                     $("#videoWell-" + i).append("<h3>" + YoutubeData.items[i].snippet.title + "</h3>");
                     $("#videoWell-" + i).append("<iframe src=" + Finalsearch + YoutubeData.items[i].id.videoId + ">" + "</iframe>");
-                    $("#videoWell-" + i).attr('hieght', '1000px');
+
+
+                    $("#videoWell-" + i).attr( 'height','1000px' );
+
+                    
+
                     //Video Description
                     // $("#videoWell-" + i).append("<h5>"+ YoutubeData.items[i].snippet.description +"</h5>");
                 }
@@ -131,24 +136,29 @@ $(document).ready(function () {
         list = [];
     }
     function putOnPage() {
-        $("#search-history").empty();
-        var insideList = JSON.parse(localStorage.getItem("searchTermList"));
-        if (!Array.isArray(insideList)) {
-            insideList = [];
-        }
-        for (var k = 0; k < insideList.length; k++) {
-            var p = $("<p>").text(insideList[k]);
+        $(".dropdown-item").empty();
+
+        for (var k = 0; k < list.length; k++) {
+            var p = $("<p>").text(list[k]);
             var b = $("<button class='delete'>").text("x").attr("data-index", k);
             p.addClass("searchingItems")
             b.addClass("delete-button");
             p.prepend(b);
-            $("#search-history").prepend(p);
+            // $("#search-history").prepend(p);
+            $(".dropdown-item").prepend(p);
+
         }
+        
     }
+    
     putOnPage();
 
-    $(document).on("click", "button.delete", function () {
-        var searchTermList = JSON.parse(localStorage.getItem("searchTermList"));
+
+   
+
+    $(document).on("click", ".delete", function() {
+        var  searchTermList = JSON.parse(localStorage.getItem("searchTermList"));
+
         var currentIndex = $(this).attr("data-index");
         // Deletes the item marked for deletion
         searchTermList.splice(currentIndex, 1);
