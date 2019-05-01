@@ -44,5 +44,11 @@ h3 {
     background: black;
     margin: 0.6rem;
   }
- 
+ .searchingItems{
+     color: white;
+ }
 
+ .logo {
+     width: 10%;
+ }
+ 
