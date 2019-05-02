@@ -37,9 +37,9 @@ $(document).ready(function () {
                     $("#videoWell-" + i).append("<iframe src=" + Finalsearch + YoutubeData.items[i].id.videoId + ">" + "</iframe>");
 
 
-                    $("#videoWell-" + i).attr( 'height','1000px' );
+                    $("#videoWell-" + i).attr('height', '1000px');
 
-                    
+
 
                     //Video Description
                     // $("#videoWell-" + i).append("<h5>"+ YoutubeData.items[i].snippet.description +"</h5>");
@@ -70,7 +70,7 @@ $(document).ready(function () {
                 .then(function (response) {
                     $("#reddit-holder").empty();
                     for (var i = 0; i < 5; i++) {
-                        var link = "https://www.reddit.com" + response.data.children[i].data.permalink + "tutorial";
+                        var link = "https://www.reddit.com" + response.data.children[i].data.permalink ;
                         // console.log(response.data.children[i].data.permalink);
                         // console.log(response.data.children[i].data.title);
                         // console.log(link);
@@ -115,7 +115,7 @@ $(document).ready(function () {
                 $("#yelpWell-" + z).append("<a href= " + response.businesses[z].url + " >" + response.businesses[z].name + "</a>");
                 $("#yelpWell-" + z).append("<h5>" + "Address :  " + response.businesses[z].location.display_address + "</h3>");
                 $("#yelpWell-" + z).append("<h5>" + "Phone :  " + response.businesses[z].phone + "</h3>");
-                
+
                 $("a").attr("target", "_blank");
             }
 
@@ -128,7 +128,6 @@ $(document).ready(function () {
         });
     }
 
-    // yelp();
 
     //local storage
     var list = JSON.parse(localStorage.getItem("searchTermList"));
@@ -146,18 +145,16 @@ $(document).ready(function () {
             p.prepend(b);
             // $("#search-history").prepend(p);
             $(".dropdown-item").prepend(p);
-
         }
-        
     }
-    
+
     putOnPage();
 
 
-   
 
-    $(document).on("click", ".delete", function() {
-        var  searchTermList = JSON.parse(localStorage.getItem("searchTermList"));
+    // delete button for local storage elements
+    $(document).on("click", ".delete", function () {
+        var searchTermList = JSON.parse(localStorage.getItem("searchTermList"));
 
         var currentIndex = $(this).attr("data-index");
         // Deletes the item marked for deletion
@@ -175,7 +172,11 @@ $(document).ready(function () {
         //modal pops up in 4 secs
         setTimeout(modalPopUp, 4000);
         //Get search term (reddit)
-        var searchTerm = $("#search").val().trim();
+        var searchTerm = $("#search").val().trim() ;
+        var searchTerm2 = searchTerm + " tutorial";
+        list.push(searchTerm);
+        localStorage.setItem("searchTermList", JSON.stringify(list));
+        putOnPage();
 
         // Get search term (youtube)
         // var queryTerm = $('#search').val().trim();
@@ -186,31 +187,27 @@ $(document).ready(function () {
         // console.log(newURL);
 
         //Send the AJAX call the newly assembled URL
-
+        //get search term youtube
         youtube(newURL);
 
-        
+
         // console.log(searchTerm);
         // var newUrl = "https://oauth.reddit.com/r/subreddit/search?q=" + searchTerm;
         // console.log(newUrl);
-        reddit(searchTerm);
+        reddit(searchTerm2);
 
         //Get search term (yelp)  
-        // var yelpTerm = $("#search").val().trim();
-        // yelp(yelpTerm)
-
-
         yelp(searchTerm, zipCode);
+
         //push searching term into array list (for local storage)
-        list.push(searchTerm);
-        localStorage.setItem("searchTermList", JSON.stringify(list));
-        putOnPage();
+       
         return false;
     })
 
 
     //search using zip code for yelp (Using zipBTN)
     $("#zipBtn").on("click", function (event) {
+        $('.panel-body').empty();
         // $('.panel-body').empty();
         event.preventDefault();
         // Get search term (youtube)
@@ -220,7 +217,8 @@ $(document).ready(function () {
 
         // get search from reddit
         var searchTerm = $("#search").val().trim();
-        reddit(searchTerm);
+        var searchTerm2 = searchTerm + " tutorial";
+        reddit(searchTerm2);
         // get search from yelp
         var zipCode = $("#zipCodeInput").val().trim();
         yelp(searchTerm, zipCode);
