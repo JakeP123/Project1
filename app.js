@@ -1,6 +1,6 @@
 $(document).ready(function () {
     // SETUP VARIABLES
-    var apiKey = "AIzaSyB1iL9inW_ZS71ILZyjrpM2w9vSbX0fL2s";
+    var apiKey = "AIzaSyDuExaY_Wa-z6OpNAJeIK46tdU8vtYYOis";
     var queryURLBase = "https://www.googleapis.com/youtube/v3/search?part=snippet&key=" + apiKey;
     var Finalsearch = "https://www.youtube.com/embed/";
     var YouTubeSearch = "tutorial";
@@ -8,24 +8,19 @@ $(document).ready(function () {
     //object from youtube
     function youtube(queryURL) {
         // AJAX Function
-        $.ajax({ url: queryURL, method: "GET" })
-            .done(function (YoutubeData) {
+
+        $.ajax({
+            url: "https://mighty-brook-95893.herokuapp.com/cors",
+            method: "POST",
+            data: {
+                method: "GET",
+                url: queryURL,
+                key: "efd92cf6cc5e7649916c4e73939e6281"
+            },
+        })
+        .done(function (YoutubeData) {
 
                 for (var i = 0; i < 5; i++) {
-                    // console.log("====================================================");
-                    // console.log("VIDEO ID");
-                    // console.log(YoutubeData.items[i].id.videoId);
-                    // console.log("====================================================");
-                    // console.log("TITLE");
-                    // console.log(YoutubeData.items[i].snippet.title);
-                    // console.log("====================================================");
-                    // console.log("DESCRIPTION");
-                    // console.log(YoutubeData.items[i].snippet.description);
-                    // console.log("====================================================");
-                    // console.log("WORKING URL");
-                    // console.log(Finalsearch + YoutubeData.items[i].id.videoId);
-                    // console.log("====================================================");
-
                     // Start Dumping to HTML Here
                     var wellSection = $('<div>');
                     wellSection.addClass("well");
@@ -34,13 +29,10 @@ $(document).ready(function () {
 
                     //Attach the content to the appropriate well
                     $("#videoWell-" + i).append("<h3>" + YoutubeData.items[i].snippet.title + "</h3>");
-                    $("#videoWell-" + i).append("<iframe src=" + Finalsearch + YoutubeData.items[i].id.videoId + ">" + "</iframe>");
+                    $("#videoWell-" + i).append("<iframe allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen src=" + Finalsearch + YoutubeData.items[i].id.videoId + ">" + "</iframe>");
 
 
                     $("#videoWell-" + i).attr('height', '1000px');
-
-
-
                     //Video Description
                     // $("#videoWell-" + i).append("<h5>"+ YoutubeData.items[i].snippet.description +"</h5>");
                 }
@@ -118,13 +110,6 @@ $(document).ready(function () {
 
                 $("a").attr("target", "_blank");
             }
-
-            // console.log(response.businesses[0].location.display_address);
-            // console.log(response.businesses[0].name);
-            // console.log(response.businesses[0].phone);
-            // console.log(response.businesses[0].price);
-            // console.log(response.businesses[0].url);
-
         });
     }
 
@@ -134,21 +119,51 @@ $(document).ready(function () {
     if (!Array.isArray(list)) {
         list = [];
     }
+    //once dropdown element is clicked, ....
+    $("body").on("click", ".dropdown-item", function(event){
+        var elem_attr = $(event.target).attr("value");
+
+        if (elem_attr === "delete") return
+
+        $('.panel-body').empty();  
+
+        var newURL = queryURLBase + "&q=" + encodeURIComponent(elem_attr) + "+" + YouTubeSearch;
+        youtube(newURL);
+        reddit(elem_attr);
+        var zipCode = $("#zipCodeInput").val().trim();
+        yelp(elem_attr, zipCode);
+
+        //putOnPage();
+       
+        // var researchTerm = $(".searchingItems").val();
+        // youtube(researchTerm);
+        // reddit(researchTerm);
+       
+    })
+
     function putOnPage() {
         $(".dropdown-item").empty();
 
         for (var k = 0; k < list.length; k++) {
-            var p = $("<p>").text(list[k]);
-            var b = $("<button class='delete'>").text("x").attr("data-index", k);
+            var p = $("<p>");
+            p.text(list[k]);
+            p.attr("value", list[k]);
+            var b = $("<button class='delete' value='delete'>").text("x").attr("data-index", k);
             p.addClass("searchingItems")
             b.addClass("delete-button");
             p.prepend(b);
-            // $("#search-history").prepend(p);
-            $(".dropdown-item").prepend(p);
+            $("#search-history").append(p);
+            $(".dropdown-item").append(p);
+
+            //research button 
+
         }
+        
     }
 
-    putOnPage();
+   putOnPage();
+  
+    
 
 
 
